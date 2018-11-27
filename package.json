@@ -1,0 +1,9 @@
+{
+  "name": "amo-utm-parser-js",
+  "version": "1.0.0",
+  "description": "Package parse utms for amoCrm",
+  "main": "index.js",
+  "repository": "git@github.com:Bessamu/amo-utm-parser-js.git",
+  "author": "Bessamu <pavel@alarm.ru>",
+  "license": "MIT"
+}
