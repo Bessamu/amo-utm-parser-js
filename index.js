@@ -3,9 +3,11 @@ var amoUtmParser = {
   utmList: ['utm_source', 'utm_keyword', 'utm_campaign', 'utm_medium', 'utm_term', 'utm_content'],
   /** @type {string[]} */
   utms: [],
+  /** @type {string} */
+  gaUser: '',
 
   /**
-   * This need do for AmoCrm utms data
+   * This need do for get all utms data
    */
   init: function () {
     var utms = this.utms
@@ -19,6 +21,15 @@ var amoUtmParser = {
       }
     )
     this.utms = utms
+
+    if (typeof ga !== 'undefined') {
+      var clientId = ''
+      ga(function (tracker) {
+        clientId = tracker.get('clientId')
+      })
+
+      this.gaUser = clientId
+    }
 
     this.checkStorage()
     this.saveUtms()
@@ -85,7 +96,7 @@ var amoUtmParser = {
   /**
    * Add hidden inputs with utm data in form
    *
-   * @param {HTMLElement} form
+   * @param {HTMLFormElement} form
    */
   addHiddenInputsInForms: function (form) {
     for (var key in this.utms) {
@@ -94,6 +105,22 @@ var amoUtmParser = {
       input.type = 'hidden'
       input.name = key
       input.value = value
+      form.appendChild(input)
+    }
+    this.addGAUserCode(form)
+  },
+
+  /**
+   * Add google analytics user id, if GA was init
+   *
+   * @param {HTMLFormElement} form
+   */
+  addGAUserCode: function (form) {
+    if (this.gaUser !== '') {
+      var input = document.createElement('input')
+      input.type = 'hidden'
+      input.name = 'ga_user'
+      input.value = this.gaUser
       form.appendChild(input)
     }
   }

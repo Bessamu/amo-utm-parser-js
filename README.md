@@ -10,7 +10,9 @@ npm install amo-utm-parser-js
 
 ### Использование (Usage)
 
-somefile.js
+Добавление в форму (add in form)
+
+someFile.js
 ```js
 import amoUtmParser from 'amo-utm-parser-js'
 
@@ -27,3 +29,28 @@ window.onload = function () {
 }
 ```
 
+Или передача данных (or just send data)
+
+someAnotherFile.js
+```js
+import axios from  'axios'
+import amoUtmParser from 'amo-utm-parser-js'
+
+window.onload = function () {
+  amoUtmParser.init()
+  //
+  // Some code
+  //
+
+  var utmData = amoUtmParser.utms
+    utmData['ga_user'] = amoUtmParser.gaUser
+      
+  axios.post('/some-api', {
+    utmData: Object.assign({}, utmData),
+  })
+  
+  //
+  // Some code
+  //
+}
+```
