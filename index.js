@@ -9,9 +9,20 @@ var amoUtmParser = {
   gaId: '',
 
   /**
-   * This need do for get all utms data
+   * Do this before usage
    */
   init: function () {
+    this.setUtmsData()
+    this.setGaData()
+    this.checkStorage()
+    this.saveUtms()
+    this.loadUtms()
+  },
+
+  /**
+   * Method set utm data for amo
+   */
+  setUtmsData () {
     var utms = this.utms
     var getParams = this.getParameterByName
     this.utmList.forEach(
@@ -23,20 +34,23 @@ var amoUtmParser = {
       }
     )
     this.utms = utms
+  },
 
+  /**
+   * Method set google analytics data if GA was init
+   */
+  setGaData () {
     if (typeof ga !== 'undefined') {
       var clientId = ''
+      var gaId = ''
       ga(function (tracker) {
         clientId = tracker.get('clientId')
+        gaId = tracker.get('trackingId')
       })
 
       this.gaUser = clientId
-      this.gaId = ga.getAll()[0].get('trackingId')
+      this.gaId = gaId
     }
-
-    this.checkStorage()
-    this.saveUtms()
-    this.loadUtms()
   },
 
   /**
