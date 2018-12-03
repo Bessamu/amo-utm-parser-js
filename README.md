@@ -41,12 +41,9 @@ window.onload = function () {
   //
   // Some code
   //
-
-  var utmData = amoUtmParser.utms
-    utmData['ga_user'] = amoUtmParser.gaUser
       
   axios.post('/some-api', {
-    utmData: Object.assign({}, utmData),
+    utmData: Object.assign({}, amoUtmParser.getAmoUtms()),
   })
   
   //
