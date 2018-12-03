@@ -43,7 +43,7 @@ window.onload = function () {
   //
       
   axios.post('/some-api', {
-    utmData: Object.assign({}, amoUtmParser.getAmoUtms()),
+    utmData: amoUtmParser.getAmoUtms(),
   })
   
   //
