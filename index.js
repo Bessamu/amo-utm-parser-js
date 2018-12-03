@@ -1,10 +1,12 @@
 var amoUtmParser = {
   /** @type {string[]} */
-  utmList: ['utm_source', 'utm_keyword', 'utm_campaign', 'utm_medium', 'utm_term', 'utm_content'],
+  utmList: ['utm_source', 'utm_campaign', 'utm_medium', 'utm_term', 'utm_content'],
   /** @type {string[]} */
   utms: [],
   /** @type {string} */
   gaUser: '',
+  /** @type {string} */
+  gaId: '',
 
   /**
    * This need do for get all utms data
@@ -29,6 +31,7 @@ var amoUtmParser = {
       })
 
       this.gaUser = clientId
+      this.gaId = ga.getAll()[0].get('trackingId')
     }
 
     this.checkStorage()
@@ -91,6 +94,19 @@ var amoUtmParser = {
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
       results = regex.exec(location.search)
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "))
+  },
+
+  /**
+   * Methods return needed utm data for AmoCRM
+   *
+   * @returns {Object}
+   */
+  getAmoUtms: function () {
+    var amoUtms = this.utms
+    amoUtms['ga_user'] = this.gaUser
+    amoUtms['ga_id'] = this.gaId
+
+    return Object.assign({}, amoUtms)
   },
 
   /**
