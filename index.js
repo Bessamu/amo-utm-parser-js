@@ -39,7 +39,7 @@ var amoUtmParser = {
   /**
    * Method set google analytics data if GA was init
    */
-  setGaData () {
+  setGaData: function () {
     if (typeof ga !== 'undefined') {
       var clientId = ''
       var gaId = ''
