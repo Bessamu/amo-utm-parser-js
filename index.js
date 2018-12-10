@@ -22,7 +22,7 @@ var amoUtmParser = {
   /**
    * Method set utm data for amo
    */
-  setUtmsData () {
+  setUtmsData: function () {
     var utms = this.utms
     var getParams = this.getParameterByName
     this.utmList.forEach(
