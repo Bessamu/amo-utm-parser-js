@@ -47,6 +47,10 @@ var amoUtmParser = {
         clientId = tracker.get('clientId')
         gaId = tracker.get('trackingId')
       })
+      if(clientId === '' || gaId === '') {
+        clientId = ga.getAll()[0].get('clientId')
+        gaId = ga.getAll()[0].get('trackingId')
+      }
 
       this.gaUser = clientId
       this.gaId = gaId
