@@ -51,3 +51,14 @@ window.onload = function () {
   //
 }
 ```
+
+Можно инициализировать пакет async (you can init package async)
+
+```js
+import amoUtmParser from 'amo-utm-parser-js'
+amoUtmParser.asyncInit()
+``` 
+
+### Events
+
+After package init dispatch event `AmoUtmParserInit`
