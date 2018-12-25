@@ -9,6 +9,15 @@ var amoUtmParser = {
   gaId: '',
 
   /**
+   * @param ms
+   */
+  sleep: function (ms) {
+    return new Promise(function (resolve) {
+      setTimeout(resolve, ms)
+    })
+  },
+
+  /**
    * Do this before usage
    */
   init: function () {
@@ -17,6 +26,17 @@ var amoUtmParser = {
     this.checkStorage()
     this.saveUtms()
     this.loadUtms()
+    document.dispatchEvent(new Event('AmoUtmParserInit'));
+  },
+
+  /**
+   * Init package with delay
+   *
+   * @param {number} delay - ms for init delay
+   */
+  asyncInit: async function (delay = 1000) {
+    await this.sleep(delay)
+    this.init()
   },
 
   /**
@@ -47,9 +67,11 @@ var amoUtmParser = {
         clientId = tracker.get('clientId')
         gaId = tracker.get('trackingId')
       })
-      if(clientId === '' || gaId === '') {
-        clientId = ga.getAll()[0].get('clientId')
-        gaId = ga.getAll()[0].get('trackingId')
+      if (clientId === '' || gaId === '') {
+        if (typeof ga.getAll !== 'undefined') {
+          clientId = ga.getAll()[0].get('clientId')
+          gaId = ga.getAll()[0].get('trackingId')
+        }
       }
 
       this.gaUser = clientId
